@@ -13,7 +13,7 @@
 #include "system/global.hpp"
 #include "system/graphics/window.hpp"
 
-#include "app/config.hpp"
+#include "app/configs.hpp"
 #include "app/app.hpp"
 
 using namespace std::chrono;
@@ -21,7 +21,7 @@ using namespace std::literals::chrono_literals;
 
 // Apenas para analisar se tá tendo muita alocação dinâmica...
 void* operator new(size_t size) {
-    std::cout << "[system] Allocing " << size << " bytes." << "\n";
+    //std::cout << "[system] Allocing " << size << " bytes." << "\n";
     return malloc(size);
 }
 

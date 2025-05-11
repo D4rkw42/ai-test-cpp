@@ -17,12 +17,12 @@ MobController mobController = MobController();
 
 void App::Initialize(void) {
     // incializando lista de mobs
-    mobs.fill(nullptr);
+    globals.mobs.fill(nullptr);
 }
 
 void App::Shutdown(void) {
     // limpando lista de mobs
-    mobs.fill(nullptr);
+    globals.mobs.fill(nullptr);
 }
 
 //

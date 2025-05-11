@@ -33,11 +33,14 @@ class AnimationHandler {
 
         void LoadAnimation(double deltaTime); // carrega as informações da animação -> usado em Update's
         void DisplayAnimation(const GraphicsResources& graphicsResources, int x, int y, double scale = 1.0f, bool flip = false); // renderiza a animação -> usado em Render's
+        
+        // inicia uma nova animação
+        void StartAnimation(const std::string& amimationID);
 
         // utility
 
-        // inicia uma nova animação
-        void StartAnimation(const std::string& amimationID);
+        bool HasAnimationFinished(void);
+        double GetAnimationTimePercent(void);
 
         // retorna por meios matemáticos qual o sprite que deve ser exibido naquele tempo de animaçãoo
         static int GetCurrentSpriteID(double duration, double countdown, int numOfSprites);

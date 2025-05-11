@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <iostream>
 #include <memory>
 #include <string>
 #include <array>
@@ -14,6 +15,9 @@
 // forward declaration para manipulador de comportamento
 class BehaviorHandler;
 
+// forward declaration para os recursos globais
+struct AppGlobals;
+
 // Classe básica para entidade
 class Entity {
     public:
@@ -25,6 +29,9 @@ class Entity {
         Vec2 pos, vel;
         int dir = -1;
 
+        // uma entidade considerada inválida pode ser eliminada automaticamente pelo ecossistema da aplicação
+        bool invalid = false;
+
         BehaviorHandler* behaviors;
         AnimationHandler animationHandler;
 
@@ -34,9 +41,9 @@ class Entity {
         ~Entity(void);
 
         // inicialização geral da entidade. Deve ser chamada apenas uma vez.
-        virtual void Init(const GraphicsResources& graphicsResources);
+        virtual void Init(const GraphicsResources& graphicsResources, AppGlobals& globals);
 
-        virtual void Update(double deltaTime); // atualiza as definições da criatura
+        virtual void Update(AppGlobals& globals, double deltaTime); // atualiza as definições da criatura
         virtual void Render(const GraphicsResources& graphicsResources); // renderiza a criatura
 
         // utility
@@ -45,6 +52,15 @@ class Entity {
         void SetState(const std::string& state);
         const std::string_view GetState(void) const;
         const std::string_view GetPrevState(void) const;
+
+        // torna uma entidade inválida
+        void Eliminate(void);
+        
+        static double GetDistance(const std::shared_ptr<Entity>& e1, const std::shared_ptr<Entity>& e2);
+        static double GetDistance(Entity* e1, Entity* e2);
+
+        // movimento
+        void MoveTorwards(double vel, double angle);
 };
 
 // definição para vetor de entidades
@@ -65,6 +81,7 @@ inline void SaveEntity(EntityList<entityListLimit>& list, const std::shared_ptr<
     for (int i = 0; i < entityListLimit; ++i) {
         if (list[i] == nullptr) {
             list[i] = entity;
+            list[i]->ID = i;
             return;
         }
     }

@@ -65,8 +65,6 @@ void AnimationHandler::DisplayAnimation(const GraphicsResources& graphicsResourc
     imageHandler->RenderImage(window, currID, x, y, cropX, cropY, animation.spriteWidth, image->height, scale, flip);
 }
 
-//
-
 void AnimationHandler::StartAnimation(const std::string& animationID) {
     // não inicia uma nova animação se ela já estiver sendo executada
     if (this->currID == animationID) {
@@ -74,12 +72,32 @@ void AnimationHandler::StartAnimation(const std::string& animationID) {
     }
 
     if (this->currID != "none") {
-        this->list[currID].inactive = false;
+        this->list[this->currID].inactive = false;
     }
 
     this->nextAnimationIn = this->list[animationID].duration;
     this->currID = animationID;
 }
+
+//
+
+bool AnimationHandler::HasAnimationFinished(void) {
+    if (this->currID == "none") {
+        return false;
+    }
+
+    return this->list[this->currID].inactive;
+}
+
+double AnimationHandler::GetAnimationTimePercent(void) {
+    if (this->currID == "none") {
+        return -1;
+    }
+
+    return 1.0f - (this->nextAnimationIn / this->list[this->currID].duration);
+}
+
+//
 
 int AnimationHandler::GetCurrentSpriteID(double duration, double countdown, int numOfSprites) {
     return static_cast<int>(map(countdown / duration, 0, 1, numOfSprites, 0));

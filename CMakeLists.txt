@@ -43,6 +43,7 @@ add_executable(
     src/core/entity/entity.cpp
 
     src/core/entity/mobs/wolf/wolf.cpp
+    src/core/entity/mobs/bunny/bunny.cpp
 
     src/utils/game/entity/animation.cpp
     src/utils/game/entity/behavior-handler.cpp

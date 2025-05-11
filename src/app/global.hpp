@@ -3,14 +3,10 @@
 #pragma once
 
 #include <memory>
-#include <vector>
+
+#include "app/resources.hpp"
 
 #include "core/entity/entity.hpp"
 
-// configs
-
-constexpr int MOB_SPAWN_LIMIT = 50;
-
-//
-
-inline EntityList<MOB_SPAWN_LIMIT> mobs; // lista de todos os mobs invocados
+// declaração do acesso aos recursos do ambientes
+inline AppGlobals globals;

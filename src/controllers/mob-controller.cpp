@@ -8,7 +8,7 @@
 #include "app/global.hpp"
 
 #include "core/entity/entity.hpp"
-#include "core/entity/mobs/wolf/wolf.hpp"
+#include "core/entity/mobs/mobs.hpp"
 
 //
 
@@ -22,15 +22,15 @@ MobController::~MobController(void) {}
 //
 
 void MobController::LoadMobs(double deltatime) {
-    for (std::shared_ptr<Entity>& mob : mobs) {
+    for (std::shared_ptr<Entity>& mob : globals.mobs) {
         if (mob != nullptr) {
-            mob->Update(deltatime);
+            mob->Update(globals, deltatime);
         }  
     }
 }
 
 void MobController::RenderMobs(void) {
-    for (std::shared_ptr<Entity>& mob : mobs) {
+    for (std::shared_ptr<Entity>& mob : globals.mobs) {
         if (mob != nullptr) {
             mob->Render(graphicsResources);
         }
@@ -49,7 +49,7 @@ void MobController::SpawnMobs(double deltaTime) {
             return;
         }
 
-        bool spawnWolf = random::get<bool>(0.5f);
+        bool spawnWolf = random::get<bool>(0.3f);
 
         int windowWidth, windowHeight;
         window->GetWindowSize(windowWidth, windowHeight);
@@ -57,19 +57,24 @@ void MobController::SpawnMobs(double deltaTime) {
         double x = random::get<double>(0, windowWidth);
         double y = random::get<double>(0, windowHeight);
 
+        std::shared_ptr<Entity> mMob;
+
         if (spawnWolf) {
             // spawns wolf
-            std::shared_ptr<Entity> mWolf = CreateEntity<Wolf>(x, y);
-            mWolf->Init(graphicsResources);
-            SaveEntity<MOB_SPAWN_LIMIT>(mobs, mWolf);
+            mMob = CreateEntity<Wolf>(x, y);
+            mMob->Init(graphicsResources, globals);   
         } else {
-            // spawns sheep
+            // spawns bunny
+            mMob = CreateEntity<Bunny>(x, y);
+            mMob->Init(graphicsResources, globals);   
         }
+        
+        SaveEntity<MOB_SPAWN_LIMIT>(globals.mobs, mMob);
     }
 }
 
 void MobController::LimitMobsMovement(void) {
-    for (std::shared_ptr<Entity>& mob : mobs) {
+    for (std::shared_ptr<Entity>& mob : globals.mobs) {
         if (mob != nullptr) {
             int windowWidth, windowHeight;
             window->GetWindowSize(windowWidth, windowHeight);
