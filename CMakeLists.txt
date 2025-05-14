@@ -41,9 +41,12 @@ add_executable(
     src/controllers/mob-controller.cpp
 
     src/core/entity/entity.cpp
+    src/core/object/object.cpp
 
     src/core/entity/mobs/wolf/wolf.cpp
     src/core/entity/mobs/bunny/bunny.cpp
+
+    src/core/object/objects/tree/tree.cpp
 
     src/utils/game/entity/animation.cpp
     src/utils/game/entity/behavior-handler.cpp

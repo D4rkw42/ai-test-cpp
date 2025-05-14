@@ -7,6 +7,7 @@
 // configurações
 constexpr double WOLF_WALK_VELOCITY = 80.0f;
 constexpr double WOLF_RUN_VELOCITY = WOLF_WALK_VELOCITY * 1.65f;
+constexpr double WOLF_ATTACK_MIN_DISTANCE = 50.0f;
 
 class Wolf : public Entity {
     public:

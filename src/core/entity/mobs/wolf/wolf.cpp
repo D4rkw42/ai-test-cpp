@@ -23,7 +23,7 @@ static void GlobalBehaviors(Entity* wolf, AppGlobals& globals, double deltaTime)
     if (wolf->GetState() != "attack") {
         for (const std::shared_ptr<Entity>& mob : globals.mobs) {
             if (mob != nullptr) {
-                if (mob->type == "bunny" && Entity::GetDistance(wolf, mob.get()) < 50.0f) {
+                if (mob->type == "bunny" && Entity::GetDistance(wolf, mob.get()) <= WOLF_ATTACK_MIN_DISTANCE) {
                     wolf->SetState("attack");
                 }
             }
@@ -100,7 +100,9 @@ static BehaviorCallback Attack(AppGlobals& globals) {
     bool enteredAttackState = false;
     int bunnyID = -1;
 
-    return [&globals, enteredAttackState, bunnyID](Entity* wolf, double deltaTime, const NextBehaviorCaller& Next) mutable {
+    bool bunnyAttacked = false;
+
+    return [&globals, enteredAttackState, bunnyID, bunnyAttacked](Entity* wolf, double deltaTime, const NextBehaviorCaller& Next) mutable {
         wolf->animationHandler.StartAnimation("wolf-attack");
         wolf->vel *= 0;
 
@@ -108,6 +110,7 @@ static BehaviorCallback Attack(AppGlobals& globals) {
         if (wolf->animationHandler.HasAnimationFinished()) {
             enteredAttackState = false;
             bunnyID = -1;
+            bunnyAttacked = false;
             return Next("idle");
         }
 
@@ -142,17 +145,16 @@ static BehaviorCallback Attack(AppGlobals& globals) {
             }
         }
 
+        // se o coelho já foi atacado, stand-by...
+        if (bunnyAttacked) {
+            return;
+        }
+
         // verifica constantemente se a ovelha porventura não foi eliminada por outro lobo
         if (globals.mobs[bunnyID] == nullptr) {
             enteredAttackState = false;
             bunnyID = -1;
-            return Next("idle");
-        }
-
-        // verifica constantemente se o endereço não pertence a outra entidade
-        if (globals.mobs[bunnyID]->type != "bunny") {
-            enteredAttackState = false;
-            bunnyID = -1;
+            bunnyAttacked = false;
             return Next("idle");
         }
 
@@ -163,9 +165,10 @@ static BehaviorCallback Attack(AppGlobals& globals) {
             wolf->dir = -1;
         }
 
-        // atacando a ovelha
-        if (wolf->animationHandler.GetAnimationTimePercent() >= 0.8f) {
+        // atacando o coelho
+        if (wolf->animationHandler.GetAnimationTimePercent() >= 0.8f && Entity::GetDistance(wolf, globals.mobs[bunnyID].get()) <= 1.1f * WOLF_ATTACK_MIN_DISTANCE) {
             DestroyEntity<MOB_SPAWN_LIMIT>(globals.mobs, bunnyID);
+            bunnyAttacked = true;
         }
     };
 }

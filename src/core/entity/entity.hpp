@@ -64,8 +64,8 @@ class Entity {
 };
 
 // definição para vetor de entidades
-template <int limit>
-using EntityList = std::array<std::shared_ptr<Entity>, limit>;
+template <int EntityListLimit>
+using EntityList = std::array<std::shared_ptr<Entity>, EntityListLimit>;
 
 
 // criação/destruição dinâmica de entidades
@@ -76,9 +76,9 @@ inline std::shared_ptr<Entity> CreateEntity(double x, double y, double velX = 0.
     return std::dynamic_pointer_cast<Entity>(mEntity);
 }
 
-template <int entityListLimit>
-inline void SaveEntity(EntityList<entityListLimit>& list, const std::shared_ptr<Entity>& entity) {
-    for (int i = 0; i < entityListLimit; ++i) {
+template <int EntityListLimit>
+inline void SaveEntity(EntityList<EntityListLimit>& list, const std::shared_ptr<Entity>& entity) {
+    for (int i = 0; i < EntityListLimit; ++i) {
         if (list[i] == nullptr) {
             list[i] = entity;
             list[i]->ID = i;
@@ -87,7 +87,7 @@ inline void SaveEntity(EntityList<entityListLimit>& list, const std::shared_ptr<
     }
 }
 
-template <int entityListLimit>
-inline void DestroyEntity(EntityList<entityListLimit>& list, int ID) {
+template <int EntityListLimit>
+inline void DestroyEntity(EntityList<EntityListLimit>& list, int ID) {
     list[ID] = nullptr;
 }

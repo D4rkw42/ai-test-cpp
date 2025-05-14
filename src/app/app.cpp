@@ -9,6 +9,8 @@
 
 #include "controllers/mob-controller.hpp"
 
+#include "core/object/objects/tree/tree.hpp"
+
 // declarando controllers
 
 MobController mobController = MobController();
@@ -18,11 +20,21 @@ MobController mobController = MobController();
 void App::Initialize(void) {
     // incializando lista de mobs
     globals.mobs.fill(nullptr);
+
+    // inicializando lista de objetos
+    globals.objects.fill(nullptr);
+
+    std::shared_ptr<Object> tree = CreateObject<Tree>(200, 200, 10);
+    tree->Init(graphicsResources);
+    SaveObject<OBJECT_SPAWN_LIMIT>(globals.objects, tree);
 }
 
 void App::Shutdown(void) {
     // limpando lista de mobs
     globals.mobs.fill(nullptr);
+
+    // inicializando lista de objetos
+    globals.objects.fill(nullptr);
 }
 
 //
@@ -43,4 +55,6 @@ void App::Update(double deltaTime) {
 void App::Render(int fps) {
     // renderiza todos os mobs
     mobController.RenderMobs();
+
+    globals.objects[0]->Render(graphicsResources);
 }
