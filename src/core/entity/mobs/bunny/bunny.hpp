@@ -5,7 +5,7 @@
 #include "core/entity/entity.hpp"
 
 // configurações
-constexpr double BUNNY_WALK_VELOCITY = 50.0f;
+constexpr double BUNNY_WALK_VELOCITY = 30.0f;
 
 class Bunny : public Entity {
     public:

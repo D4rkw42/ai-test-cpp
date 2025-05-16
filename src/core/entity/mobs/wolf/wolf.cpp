@@ -187,7 +187,10 @@ static BehaviorCallback Idle(void) {
         if (!enteredIdleState) {
             enteredIdleState = true;
 
-            wolf->dir = random::get<int>({ -1, 1 });
+            // saindo do ataque, permanece a orientação anterior
+            if (wolf->GetPrevState() != "attack") {
+                wolf->dir = random::get<int>({ -1, 1 });
+            }
         }
 
         startWalkigIn -= deltaTime;
@@ -209,7 +212,7 @@ static void RegisterBehaviors(Wolf* wolf, AppGlobals& globals) {
 // Animação
 
 static void RegisterAnimations(const GraphicsResources& graphicsResources, Wolf* wolf) {
-    wolf->animationHandler.RegisterAnimation(graphicsResources, "wolf-walk", "wolf/walking.png", 5, 0.9f);
+    wolf->animationHandler.RegisterAnimation(graphicsResources, "wolf-walk", "wolf/walking.png", 5, 0.7f);
     wolf->animationHandler.RegisterAnimation(graphicsResources, "wolf-run", "wolf/running.png", 5, 0.5f);
     wolf->animationHandler.RegisterAnimation(graphicsResources, "wolf-idle", "wolf/idle.png", 2, 1.5f);
     wolf->animationHandler.RegisterAnimation(graphicsResources, "wolf-attack", "wolf/attack.png", 5, 0.6f, false);
