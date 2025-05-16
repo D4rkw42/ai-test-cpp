@@ -8,10 +8,11 @@
 
 class Object {
     public:
+        std::string type;
         int x, y, size;
 
-        Object(int x, int y, int size);
-        ~Object(void);
+        Object(const std::string& type, int x, int y, int size);
+        ~Object();
 
         virtual void Init(const GraphicsResources& graphicsResources);
         virtual void Render(const GraphicsResources& graphicsResources);

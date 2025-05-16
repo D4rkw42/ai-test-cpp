@@ -16,11 +16,6 @@ using random = effolkronium::random_static;
 
 //
 
-MobController::MobController(void) {}
-MobController::~MobController(void) {}
-
-//
-
 void MobController::LoadMobs(double deltatime) {
     for (std::shared_ptr<Entity>& mob : globals.mobs) {
         if (mob != nullptr) {

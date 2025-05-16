@@ -12,6 +12,7 @@ struct Animation {
     std::string spritesheet; // path para o spritesheet
     int spriteWidth; // largura do sprite
     int numOfSprites; // número de sprites
+    int currSpriteID; // sprite atual
     double duration; // duração da animação em segundos
     bool repeat, inactive; // repetir? inativo?
 };
@@ -40,12 +41,11 @@ class AnimationHandler {
         // utility
 
         bool HasAnimationFinished(void);
+        void RestartAnimation(void);
         double GetAnimationTimePercent(void);
-
-        // retorna por meios matemáticos qual o sprite que deve ser exibido naquele tempo de animaçãoo
-        static int GetCurrentSpriteID(double duration, double countdown, int numOfSprites);
 
     private:
         AnimationList list;
         double nextAnimationIn;
+        double nextSpriteIn;
 };

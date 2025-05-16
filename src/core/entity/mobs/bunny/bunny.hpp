@@ -5,12 +5,12 @@
 #include "core/entity/entity.hpp"
 
 // configurações
-constexpr double BUNNY_WALK_VELOCITY = 60.0f;
+constexpr double BUNNY_WALK_VELOCITY = 50.0f;
 
 class Bunny : public Entity {
     public:
         Bunny(const Vec2& pos, const Vec2& vel);
-        ~Bunny(void) = default;
+        ~Bunny() = default;
 
         void Init(const GraphicsResources& graphicsResources, AppGlobals& globals) override final;
 

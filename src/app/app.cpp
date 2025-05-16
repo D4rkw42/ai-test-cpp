@@ -7,13 +7,13 @@
 #include "system/global.hpp"
 #include "app/global.hpp"
 
+#include "controllers/ambient-controller.hpp"
 #include "controllers/mob-controller.hpp"
-
-#include "core/object/objects/tree/tree.hpp"
+#include "core/entity/mobs/mobs.hpp"
 
 // declarando controllers
-
-MobController mobController = MobController();
+AmbientController ambientController;
+MobController mobController;
 
 //
 
@@ -24,9 +24,8 @@ void App::Initialize(void) {
     // inicializando lista de objetos
     globals.objects.fill(nullptr);
 
-    std::shared_ptr<Object> tree = CreateObject<Tree>(200, 200, 10);
-    tree->Init(graphicsResources);
-    SaveObject<OBJECT_SPAWN_LIMIT>(globals.objects, tree);
+    // pré-geração do ambiente
+    ambientController.GenerateAmbient();
 }
 
 void App::Shutdown(void) {
@@ -56,5 +55,6 @@ void App::Render(int fps) {
     // renderiza todos os mobs
     mobController.RenderMobs();
 
-    globals.objects[0]->Render(graphicsResources);
+    // renderiza o ambiente
+    ambientController.RenderAmbient();
 }

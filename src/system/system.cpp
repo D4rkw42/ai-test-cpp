@@ -35,7 +35,7 @@ void System::Initialize(void) {
     InitializeSubsystems();
 
     // Inicializando janela
-    window = std::make_shared<Window>("AI Test", 600, 400);
+    window = std::make_shared<Window>("AI Test", 900, 600);
 
     // gerando recursos globais
     graphicsResources = GraphicsResources { window, imageHandler };

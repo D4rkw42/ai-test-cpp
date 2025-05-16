@@ -125,5 +125,5 @@ void Bunny::Update(AppGlobals& globals, double deltaTime) {
 
 void Bunny::Render(const GraphicsResources& graphicsResources) {
     // renderiza a animação
-    this->animationHandler.DisplayAnimation(graphicsResources, this->pos.Get(0), this->pos.Get(1), 1.2f, (this->dir == -1));
+    this->animationHandler.DisplayAnimation(graphicsResources, this->pos.Get(0), this->pos.Get(1), 0.75f, (this->dir == -1));
 }

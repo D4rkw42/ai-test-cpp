@@ -39,6 +39,7 @@ add_executable(
     src/app/app.cpp
 
     src/controllers/mob-controller.cpp
+    src/controllers/ambient-controller.cpp
 
     src/core/entity/entity.cpp
     src/core/object/object.cpp
@@ -47,6 +48,7 @@ add_executable(
     src/core/entity/mobs/bunny/bunny.cpp
 
     src/core/object/objects/tree/tree.cpp
+    src/core/object/objects/bush/bush.cpp
 
     src/utils/game/entity/animation.cpp
     src/utils/game/entity/behavior-handler.cpp

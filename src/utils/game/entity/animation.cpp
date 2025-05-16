@@ -11,7 +11,7 @@ AnimationHandler::AnimationHandler(void) {}
 //
 
 void AnimationHandler::RegisterAnimation(const GraphicsResources& graphicsResources, const std::string& animationID, const std::string& spritesheet, int numOfSprites, double duration, bool repeat) {
-    this->list[animationID] = Animation { std::string(SPRITESHEET_PATH) + spritesheet, -1, numOfSprites, duration, repeat, false };
+    this->list[animationID] = Animation { std::string(SPRITESHEET_PATH) + spritesheet, -1, numOfSprites, 0, duration, repeat, false };
 
     std::shared_ptr<Window> window = graphicsResources.window;
     std::shared_ptr<ImageHandler> imageHandler = graphicsResources.imageHandler;
@@ -34,9 +34,28 @@ void AnimationHandler::LoadAnimation(double deltaTime) {
         return;
     }
 
+    // pula sprites
+    double spriteStep = animation.duration / animation.numOfSprites;
+
+    this->nextSpriteIn -= deltaTime;
+
+    if (this->nextSpriteIn <= 0) {
+        this->nextSpriteIn = spriteStep;
+        animation.currSpriteID++;
+
+        if (animation.currSpriteID == animation.numOfSprites) {
+            animation.currSpriteID = 0;
+        }
+    }
+
+    //
+
     this->nextAnimationIn -= deltaTime;
 
-    if (this->nextAnimationIn <= 0) {
+    if (this->nextAnimationIn < 0) {
+        // garante que o tempo de animação não fique negativo, gerando tentativas de desenhar sprites inválidos
+        this->nextAnimationIn = 0;
+
         if (animation.repeat) {
             this->nextAnimationIn = animation.duration;
             return;
@@ -57,7 +76,7 @@ void AnimationHandler::DisplayAnimation(const GraphicsResources& graphicsResourc
     Animation& animation = this->list[this->currID];
     std::shared_ptr<Image> image = imageHandler->GetImage(this->currID);
 
-    int spriteID = AnimationHandler::GetCurrentSpriteID(animation.duration, this->nextAnimationIn, animation.numOfSprites);
+    int spriteID = animation.currSpriteID;
 
     int cropX = animation.spriteWidth * spriteID;
     int cropY = 0;
@@ -73,9 +92,13 @@ void AnimationHandler::StartAnimation(const std::string& animationID) {
 
     if (this->currID != "none") {
         this->list[this->currID].inactive = false;
+        this->list[this->currID].currSpriteID = 0;
     }
 
+    double spriteStep = this->list[animationID].duration / this->list[animationID].numOfSprites;
+
     this->nextAnimationIn = this->list[animationID].duration;
+    this->nextSpriteIn = spriteStep;
     this->currID = animationID;
 }
 
@@ -89,16 +112,19 @@ bool AnimationHandler::HasAnimationFinished(void) {
     return this->list[this->currID].inactive;
 }
 
+void AnimationHandler::RestartAnimation(void) {
+    if (this->currID == "none") {
+        return;
+    }
+
+    this->nextAnimationIn = this->list[this->currID].duration;
+    this->list[this->currID].inactive = false;
+}
+
 double AnimationHandler::GetAnimationTimePercent(void) {
     if (this->currID == "none") {
         return -1;
     }
 
     return 1.0f - (this->nextAnimationIn / this->list[this->currID].duration);
-}
-
-//
-
-int AnimationHandler::GetCurrentSpriteID(double duration, double countdown, int numOfSprites) {
-    return static_cast<int>(map(countdown / duration, 0, 1, numOfSprites, 0));
 }

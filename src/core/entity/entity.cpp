@@ -23,7 +23,7 @@ Entity::Entity(void) {}
 
 //
 
-Entity::~Entity(void) {
+Entity::~Entity() {
     delete this->behaviors;
 }
 

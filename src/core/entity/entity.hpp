@@ -38,7 +38,7 @@ class Entity {
         Entity(const std::string& type, const std::string& state, const Vec2& pos, const Vec2& vel);
         Entity(void);
 
-        ~Entity(void);
+        ~Entity();
 
         // inicialização geral da entidade. Deve ser chamada apenas uma vez.
         virtual void Init(const GraphicsResources& graphicsResources, AppGlobals& globals);

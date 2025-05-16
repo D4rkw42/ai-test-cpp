@@ -107,10 +107,13 @@ static BehaviorCallback Attack(AppGlobals& globals) {
         wolf->vel *= 0;
 
         // finaliza o ataque
-        if (wolf->animationHandler.HasAnimationFinished()) {
+        if (wolf->animationHandler.HasAnimationFinished() && enteredAttackState) {
+            wolf->animationHandler.RestartAnimation(); // restarta a animação em caso de posterior chamamento
+
             enteredAttackState = false;
             bunnyID = -1;
             bunnyAttacked = false;
+
             return Next("idle");
         }
 
@@ -239,5 +242,5 @@ void Wolf::Update(AppGlobals& globals, double deltaTime) {
 
 void Wolf::Render(const GraphicsResources& graphicsResources) {
     // renderiza a animação
-    this->animationHandler.DisplayAnimation(graphicsResources, this->pos.Get(0), this->pos.Get(1), 1.2f, (this->dir != -1));
+    this->animationHandler.DisplayAnimation(graphicsResources, this->pos.Get(0), this->pos.Get(1), 0.9f, (this->dir != -1));
 }

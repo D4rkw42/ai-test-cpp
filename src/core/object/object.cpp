@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-Object::Object(int x, int y, int size) : x(x), y(y), size(size) {}
+Object::Object(const std::string& type, int x, int y, int size) : type(type), x(x), y(y), size(size) {}
 Object::~Object(void) {}
 
 void Object::Render(const GraphicsResources& graphicsResources) {

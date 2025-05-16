@@ -5,8 +5,7 @@
 #include <iostream>
 
 Window::Window(const std::string& name, int width, int height) {
-    this->window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
-                    SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+    this->window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 
     if (this->window == NULL) {
         std::cerr << "Couldn't create a window: " << SDL_GetError() << "\n";

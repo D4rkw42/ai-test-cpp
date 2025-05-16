@@ -9,4 +9,4 @@ constexpr int FPS = 60;
 constexpr int MOB_SPAWN_LIMIT = 20;
 
 // quantidade máxima de objetos
-constexpr int OBJECT_SPAWN_LIMIT = 30;
+constexpr int OBJECT_SPAWN_LIMIT = 40;

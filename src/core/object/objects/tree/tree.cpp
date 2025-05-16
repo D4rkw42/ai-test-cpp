@@ -2,7 +2,7 @@
 
 #include "tree.hpp"
 
-Tree::Tree(int x, int y, int size) : Object(x, y, size) {};
+Tree::Tree(int x, int y, int size) : Object("tree", x, y, size) {};
 
 //
 
@@ -12,5 +12,5 @@ void Tree::Init(const GraphicsResources& graphicsResources) {
 
 void Tree::Render(const GraphicsResources& graphicsResources) {
     // renderiza a árvore
-    graphicsResources.imageHandler->RenderImage(graphicsResources.window, "tree", x, y, 0.5f);
+    graphicsResources.imageHandler->RenderImage(graphicsResources.window, "tree", x, y, 0.8f);
 }
