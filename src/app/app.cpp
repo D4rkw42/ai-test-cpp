@@ -9,11 +9,14 @@
 
 #include "controllers/ambient-controller.hpp"
 #include "controllers/mob-controller.hpp"
+#include "controllers/collision-controller.hpp"
+
 #include "core/entity/mobs/mobs.hpp"
 
 // declarando controllers
 AmbientController ambientController;
 MobController mobController;
+CollisionController collisionController;
 
 //
 
@@ -46,6 +49,10 @@ void App::Update(double deltaTime) {
 
     // carrega todos os mobs
     mobController.LoadMobs(deltaTime);
+
+    // colisores
+    collisionController.MobToMobCollision(deltaTime);
+    collisionController.MobToObjectCollision(deltaTime);
 
     // limita o movimento dos mobs
     mobController.LimitMobsMovement();

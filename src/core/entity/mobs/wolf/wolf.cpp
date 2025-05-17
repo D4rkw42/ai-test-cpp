@@ -55,7 +55,7 @@ static BehaviorCallback Walk(void) {
             }
 
             // chance de correr
-            if (random::get<bool>(0.15f)) {
+            if (random::get<bool>(0.4f)) {
                 return Next("running");
             }
         }
@@ -196,7 +196,7 @@ static BehaviorCallback Idle(void) {
         startWalkigIn -= deltaTime;
 
         if (startWalkigIn <= 0) {
-            startWalkigIn = random::get<double>(6.0f, 12.0f);
+            startWalkigIn = random::get<double>(4.0f, 8.0f);
             return Next("walking");
         }
     };
@@ -220,7 +220,7 @@ static void RegisterAnimations(const GraphicsResources& graphicsResources, Wolf*
 
 //
 
-Wolf::Wolf(const Vec2& pos, const Vec2& vel) : Entity("wolf", (random::get<bool>(0.6f))? "idle" : "walking", pos, vel) {}
+Wolf::Wolf(const Vec2& pos, const Vec2& vel) : Entity("wolf", (random::get<bool>(0.6f))? "idle" : "walking", pos, vel, WOLF_SIZE) {}
 
 //
 

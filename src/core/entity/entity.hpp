@@ -29,13 +29,16 @@ class Entity {
         Vec2 pos, vel;
         int dir = -1;
 
+        // tamanho de uma entidade
+        int size;
+
         // uma entidade considerada inválida pode ser eliminada automaticamente pelo ecossistema da aplicação
         bool invalid = false;
 
         BehaviorHandler* behaviors;
         AnimationHandler animationHandler;
 
-        Entity(const std::string& type, const std::string& state, const Vec2& pos, const Vec2& vel);
+        Entity(const std::string& type, const std::string& state, const Vec2& pos, const Vec2& vel, int size);
         Entity(void);
 
         ~Entity();
@@ -58,6 +61,7 @@ class Entity {
         
         static double GetDistance(const std::shared_ptr<Entity>& e1, const std::shared_ptr<Entity>& e2);
         static double GetDistance(Entity* e1, Entity* e2);
+        static bool IsColliding(const std::shared_ptr<Entity>& e1, const std::shared_ptr<Entity>& e2);
 
         // movimento
         void MoveTorwards(double vel, double angle);

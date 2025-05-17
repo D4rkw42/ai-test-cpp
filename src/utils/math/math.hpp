@@ -26,3 +26,11 @@ inline double distance(double x1, double y1, double x2, double y2) {
     
     return std::sqrt(dx * dx + dy * dy);
 }
+
+// retorna o ângulo entre dois pontos
+inline double GetAngleBetween(const Vec2& coord1, const Vec2& coord2) {
+    double dx = coord2.Get(0) - coord1.Get(0);
+    double dy = coord2.Get(1) - coord1.Get(1);
+
+    return std::atan2(dy, dx);
+}

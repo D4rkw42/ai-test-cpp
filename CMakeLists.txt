@@ -40,6 +40,7 @@ add_executable(
 
     src/controllers/mob-controller.cpp
     src/controllers/ambient-controller.cpp
+    src/controllers/collision-controller.cpp
 
     src/core/entity/entity.cpp
     src/core/object/object.cpp

@@ -79,7 +79,7 @@ static BehaviorCallback Idle(void) {
         startWalkigIn -= deltaTime;
 
         if (startWalkigIn <= 0) {
-            startWalkigIn = random::get<double>(6.0f, 12.0f);
+            startWalkigIn = random::get<double>(3.0f, 8.0f);
             return Next("walking");
         }
     };
@@ -100,7 +100,7 @@ static void RegisterAnimations(const GraphicsResources& graphicsResources, Bunny
 
 //
 
-Bunny::Bunny(const Vec2& pos, const Vec2& vel) : Entity("bunny", (random::get<bool>(0.6f))? "idle" : "walking", pos, vel) {}
+Bunny::Bunny(const Vec2& pos, const Vec2& vel) : Entity("bunny", (random::get<bool>(0.6f))? "idle" : "walking", pos, vel, BUNNY_SIZE) {}
 
 //
 

@@ -3,12 +3,11 @@
 #include "entity.hpp"
 
 #include <iostream>
-
 #include <string_view>
 
 #include "utils/game/entity/behavior-handler.hpp"
 
-Entity::Entity(const std::string& type, const std::string& state, const Vec2& pos, const Vec2& vel) : type(type), pos(pos), vel(vel) {
+Entity::Entity(const std::string& type, const std::string& state, const Vec2& pos, const Vec2& vel, int size) : type(type), pos(pos), vel(vel), size(size) {
     this->behaviors = new BehaviorHandler;
 
     this->state = std::make_shared<std::string>();
@@ -72,6 +71,13 @@ double Entity::GetDistance(Entity* e1, Entity* e2) {
     double distY = e1->pos.Get(1) - e2->pos.Get(1);
 
     return std::sqrt(distX * distX + distY * distY);
+}
+
+bool Entity::IsColliding(const std::shared_ptr<Entity>& e1, const std::shared_ptr<Entity>& e2) {
+    double dist = GetDistance(e1, e2);
+    double sizeAverg = (e1->size + e2->size) / 2.0f;
+
+    return dist < sizeAverg;
 }
 
 // movement
